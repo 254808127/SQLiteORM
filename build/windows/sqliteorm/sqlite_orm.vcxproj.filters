@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="sqlite">
+      <UniqueIdentifier>{32d6637f-62b3-47ca-8426-3306e03d7eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sqlitecpp">
+      <UniqueIdentifier>{282ec497-bdf9-4a0c-8d12-d97b4911060c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sqliteorm">
+      <UniqueIdentifier>{91ac0172-710f-4fb9-b047-4367c3b01b2e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\inc\sqlite\sqlite3.h">
+      <Filter>sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqlitecpp\Assertion.h">
+      <Filter>sqlitecpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqlitecpp\Backup.h">
+      <Filter>sqlitecpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqlitecpp\Column.h">
+      <Filter>sqlitecpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqlitecpp\Database.h">
+      <Filter>sqlitecpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqlitecpp\Exception.h">
+      <Filter>sqlitecpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqlitecpp\SQLiteCpp.h">
+      <Filter>sqlitecpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqlitecpp\Statement.h">
+      <Filter>sqlitecpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqlitecpp\Transaction.h">
+      <Filter>sqlitecpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqlitecpp\VariadicBind.h">
+      <Filter>sqlitecpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqliteorm\orm_database.h">
+      <Filter>sqliteorm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqliteorm\orm_include.h">
+      <Filter>sqliteorm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqliteorm\orm_macro.h">
+      <Filter>sqliteorm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqliteorm\orm_object.h">
+      <Filter>sqliteorm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqliteorm\orm_performance.h">
+      <Filter>sqliteorm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqliteorm\orm_string.h">
+      <Filter>sqliteorm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqliteorm\orm_type.h">
+      <Filter>sqliteorm</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\inc\sqliteorm\cpp_gen.py">
+      <Filter>sqliteorm</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\sqlite\sqlite3.c">
+      <Filter>sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sqlitecpp\Backup.cpp">
+      <Filter>sqlitecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sqlitecpp\Column.cpp">
+      <Filter>sqlitecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sqlitecpp\Database.cpp">
+      <Filter>sqlitecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sqlitecpp\Exception.cpp">
+      <Filter>sqlitecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sqlitecpp\Statement.cpp">
+      <Filter>sqlitecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sqlitecpp\Transaction.cpp">
+      <Filter>sqlitecpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sqliteorm\orm_database.cpp">
+      <Filter>sqliteorm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sqliteorm\orm_object.cpp">
+      <Filter>sqliteorm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sqliteorm\orm_performance.cpp">
+      <Filter>sqliteorm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sqliteorm\orm_string.cpp">
+      <Filter>sqliteorm</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
