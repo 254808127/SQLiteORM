@@ -111,7 +111,7 @@ int main()
 
         //e.g. SELECT max(`age`) FROM `person`
         auto get_max =
-            [&]()
+        [&]()
         {
             auto max =
                 SQLiteORM::SQL<person>(&db)
@@ -123,8 +123,8 @@ int main()
 
         remove();
         insert();
+        search();
         update();
-        search_id("254808127");
         search_id_and_name("254808127", "JiXiangSiMengXiong");
         get_count();
         get_max();
