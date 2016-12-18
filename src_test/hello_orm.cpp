@@ -13,9 +13,9 @@ SQLITE_ORM_BEGIN(person)
 SQLITE_ORM_END()
 
 #ifdef _DEBUG
-#pragma comment(lib, "../lib/sqlite_orm_Debug.lib")
+#pragma comment(lib, "../../../lib/sqlite_orm_x86_Debug.lib")
 #else
-#pragma comment(lib, "../lib/sqlite_orm_Release.lib")
+#pragma comment(lib, "../../../lib/sqlite_orm_x86_Release.lib")
 #endif
 
 int main()
