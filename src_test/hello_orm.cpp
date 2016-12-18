@@ -4,9 +4,9 @@
 #include <functional>
 
 //todo: 
-//.Implement attach
+//.Implement SQL Primitives: 'attach'
 //.Embedded cipher
-//.Provide the ability to dynamic linkage features of all C++ class
+//.Provide dynamic linkage features for all C++ classes
 
 SQLITE_ORM_BEGIN(person)
     SQLITE_ORM_INITIALIZER6(id, name, age, tel, address, email);
