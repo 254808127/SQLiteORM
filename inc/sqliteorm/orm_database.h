@@ -25,6 +25,8 @@ namespace SQLiteORM
         bool open_db(const MyStr& filename);
         void close_db();
 
+        bool exsit(const MyStr& tablename);
+
         //SQLBase
         virtual bool commit_once(const MyStr& sqlstring);
 

@@ -1,7 +1,10 @@
 #include "sqliteorm/orm_database.h"
 #include "sqliteorm/orm_object.h"
+#include "sqliteorm/orm_config.h"
 
 #include "sqlitecpp/Database.h"
+
+#include <filesystem>
 
 namespace SQLiteORM
 {
@@ -16,10 +19,18 @@ namespace SQLiteORM
     {
         if (m_opened)
             return true;
+
+        int flag = SQLite::OPEN_READWRITE;
+#ifdef ORM_CPP_17_EXP
+        std::experimental::filesystem::path path(filename);
+        if (!std::experimental::filesystem::exists(path)) {
+            flag |= SQLite::OPEN_CREATE;
+        }
+#endif
         m_opened = true;
         try
         {
-            m_db.reset(new SQLite::Database(filename, SQLite::OPEN_READWRITE));
+            m_db.reset(new SQLite::Database(filename, flag));
         }
         catch (std::exception& exp)
         {
@@ -40,6 +51,15 @@ namespace SQLiteORM
         {
             append_error("open_db", exp.what());
         }
+    }
+
+    bool SQLDatabase::exsit(const MyStr& tablename)
+    {
+        if (m_opened && !tablename.empty())
+        {
+            return m_db->tableExists(tablename);
+        }
+        return false;
     }
 
     bool SQLDatabase::commit_once(const MyStr& sqlstring)

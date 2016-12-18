@@ -48,9 +48,6 @@
     <ClInclude Include="..\..\..\inc\sqliteorm\orm_include.h">
       <Filter>sqliteorm</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\inc\sqliteorm\orm_macro.h">
-      <Filter>sqliteorm</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\inc\sqliteorm\orm_object.h">
       <Filter>sqliteorm</Filter>
     </ClInclude>
@@ -61,6 +58,9 @@
       <Filter>sqliteorm</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\inc\sqliteorm\orm_type.h">
+      <Filter>sqliteorm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\inc\sqliteorm\orm_config.h">
       <Filter>sqliteorm</Filter>
     </ClInclude>
   </ItemGroup>

@@ -18,7 +18,6 @@ namespace SQLite
 
 namespace SQLiteORM
 {
-
     struct Column2 : public StringStreamType
     {
         typedef std::vector<unsigned char> Blob;
@@ -62,6 +61,7 @@ namespace SQLiteORM
         void setBlob(const Blob& blob);
         void setBlob(const uint8_t * buffer, uint32_t len);
         void setNull();
+        void setConstrains(int32_t constrains);
 
         //为了和SQLite::Column接口一致
         int64_t getInt64() const;
@@ -69,12 +69,14 @@ namespace SQLiteORM
         const MyCharType* getText() const;
         const MyCharType* getName() const;
         const uint8_t * getBlob() const;
-        int getType() const;
+        int32_t getType() const;
+        int32_t getConstrains() const;
         const MyCharType* getTypeName() const;
         const MyCharType* getSQL() const;
 
     private:
-        int type_;
+        int32_t type_;
+        int32_t constrains_;
         //todo: use a big union
         double numberic_;
         int64_t integer_;
@@ -259,11 +261,11 @@ namespace SQLiteORM
         };
 
         MyStr DumpToDebugString() const;
-        MyStr DumpToValue() const;
-        MyStr DumpToSet() const;
 
         void setName(const MyCharType*);
         const MyCharType* getName() const;
+
+        const std::vector<Column2*>& getColumnList() const;
 
         bool Query(SQLite::Statement& query);
     protected:

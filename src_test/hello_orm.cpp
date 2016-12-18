@@ -24,6 +24,42 @@ int main()
     if (db.open_db("./test.db"))
     {
         person p;
+
+        /*
+            e.g.
+            CREATE TABLE `person` (
+            `id`	INTEGER NOT NULL DEFAULT 0 PRIMARY KEY AUTOINCREMENT,
+            `name`	TEXT DEFAULT 'noname',
+            `age`	INTEGER DEFAULT 0,
+            `tel`	TEXT DEFAULT 'notel',
+            `address`	TEXT DEFAULT 'noaddress',
+            `email`	TEXT DEFAULT 'noemail' UNIQUE
+            );
+        */
+        //CHECK and FOREIGN KEY aren't supported yet.
+        auto create_table =
+        [&](const SQLiteORM::Row& row)
+        {
+            SQLiteORM::SQL<person>(&db)
+                .BEGIN()
+                .CREATE_TABLE(row)
+                .END();
+        };
+        if (!db.exsit(p.getName()))
+        {
+            p.id.setInt64(0);
+            p.id.setConstrains(
+                SQLiteORM::enum_constrain_not_null |
+                SQLiteORM::enum_constrain_primary |
+                SQLiteORM::enum_constrain_autoincrement);
+            p.name.setText("noname");
+            p.email.setConstrains(SQLiteORM::enum_constrain_unique);
+            p.email.setText("noemail");
+            p.tel.setText("notel");
+            p.age.setInt64(0);
+            p.address.setText("noaddress");
+            create_table(p);
+        }
         //e.g. INTO `person` VALUES (254808127,'JXSMS', 'age', '254808127','WuDaoKou','254808127@qq.com')
         auto insert = 
         [&]()
@@ -131,4 +167,4 @@ int main()
         db.close_db();
     }
 	return 0;
-}
+}  

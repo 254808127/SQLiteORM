@@ -5,6 +5,8 @@
 #include <list>
 #include <vector>
 
+#include "sqlitecpp/Column.h"
+
 namespace SQLiteORM
 {
     void SQLBegin::set_table_name(const MyStr& table_name)
@@ -199,7 +201,16 @@ namespace SQLiteORM
         {
             sql_ = parent_->sql();
             sql_ += "VALUES ";
-            sql_ += row.DumpToValue();
+            sql_.push_back('(');
+            for (auto i : row.getColumnList())
+            {
+                MyOStrStream oss;
+                oss << *i;
+                sql_.append(oss.str());
+                sql_ += ",";
+            }
+            sql_.pop_back();
+            sql_.push_back(')');
         }
         return *this;
     }
@@ -235,7 +246,14 @@ namespace SQLiteORM
         {
             sql_ = parent_->sql();
             sql_ += "SET ";
-            sql_ += row.DumpToSet();
+            for (auto i : row.getColumnList())
+            {
+                MyOStrStream oss;
+                oss << "`" << i->getName() << "`=" << *i;
+                sql_.append(oss.str());
+                sql_ += ",";
+            }
+            sql_.pop_back();
             sql_ += " ";
         }
         return *this;
@@ -258,5 +276,35 @@ namespace SQLiteORM
         if (begin_)
             sql_ = "UPDATE `" + begin_->get_table_name() + "` ";
         SET.init(this);
+    }
+
+    CreateTable& CreateTable::operator()(const Row& row)
+    {
+        sql_ = "CREATE TABLE `";
+        sql_ += row.getName();
+        sql_ += "`";
+        sql_ += "(";
+        for (auto i : row.getColumnList())
+        {
+            MyOStrStream oss;
+            oss << "`" << i->getName() << "` "; 
+            if (i->getType() != SQLite::Null)
+            {
+                oss << i->getTypeName() << " DEFAULT " << *i << " ";
+            }
+            if (i->getConstrains()&enum_constrain_not_null)
+                oss << "NOT NULL ";
+            if (i->getConstrains()&enum_constrain_primary)
+                oss << "PRIMARY KEY ";
+            if ((i->getConstrains()&enum_constrain_autoincrement) && (i->getType() == SQLite::INTEGER))
+                oss << "AUTOINCREMENT ";
+            if (i->getConstrains()&enum_constrain_unique)
+                oss << "UNIQUE ";
+            oss << ",";
+            sql_ += oss.str();
+        }
+        sql_.pop_back();
+        sql_ += ")";
+        return *this;
     }
 }

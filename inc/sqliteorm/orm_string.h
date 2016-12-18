@@ -7,21 +7,6 @@
 
 namespace SQLiteORM
 {    
-    enum SQLStateType
-    {
-        enum_begin_state,
-        enum_end_state,
-    };
-
-    enum SQLCommitType
-    {
-        enum_commit_invalid,
-        enum_commit_once, //no return
-        enum_query_count, //return record count
-        enum_query_max, //return max column value
-        enum_query_loop, //return multiple record
-    };
-
     template<class T> struct SQL;
 
     struct SQLEnd;
@@ -156,6 +141,11 @@ namespace SQLiteORM
         Set SET;
     };
 
+    struct CreateTable : public SQLEnd
+    {
+        CreateTable& operator()(const Row& Row);
+    };
+
     template<class T>
     struct SQL : public SQLBegin
     {
@@ -192,6 +182,11 @@ namespace SQLiteORM
             SELECT_MAX.database_ = db;
             SELECT_MAX.commit_type_ = enum_query_max;
             SELECT_MAX.init(nullptr);
+
+            CREATE_TABLE.begin_ = this;
+            CREATE_TABLE.database_ = db;
+            CREATE_TABLE.commit_type_ = enum_commit_once;
+            CREATE_TABLE.init(nullptr);
         }
 
         SQL& BEGIN()
@@ -206,6 +201,8 @@ namespace SQLiteORM
 
         SelectCount SELECT_COUNT;
         SelectMax   SELECT_MAX;
+
+        CreateTable CREATE_TABLE;
 
         bool end(SQLEnd* sqlend)
         {

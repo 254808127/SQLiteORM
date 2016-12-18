@@ -1,4 +1,5 @@
 import os
+import sys
 
 def generate_begin():
     return \
@@ -38,17 +39,22 @@ def generate_member(param_count):
 def generate_end():
     return "#define SQLITE_ORM_END() };\n"
 
-
 def generate_full(param_count):
+    print("=== Begin generate orm_marco.h ===")
     full_content = generate_begin()
     for t in range(1, param_count + 1):
         full_content += generate_member(t)
     full_content += generate_end()
+    print("=== End generate orm_marco.h ===")
     return full_content
 
 cpp_content = generate_full(20)
-print(cpp_content)
 
-f = open("./orm_macro.h", "w")
+path = os.path.realpath(sys.argv[0])  
+if os.path.isfile(path):  
+    path = os.path.dirname(path)
+path += "\\orm_macro.h"
+
+f = open(path, "w")
 f.write(cpp_content)
 

@@ -28,9 +28,9 @@
     <ClInclude Include="..\..\..\inc\sqlitecpp\Statement.h" />
     <ClInclude Include="..\..\..\inc\sqlitecpp\Transaction.h" />
     <ClInclude Include="..\..\..\inc\sqlitecpp\VariadicBind.h" />
+    <ClInclude Include="..\..\..\inc\sqliteorm\orm_config.h" />
     <ClInclude Include="..\..\..\inc\sqliteorm\orm_database.h" />
     <ClInclude Include="..\..\..\inc\sqliteorm\orm_include.h" />
-    <ClInclude Include="..\..\..\inc\sqliteorm\orm_macro.h" />
     <ClInclude Include="..\..\..\inc\sqliteorm\orm_object.h" />
     <ClInclude Include="..\..\..\inc\sqliteorm\orm_performance.h" />
     <ClInclude Include="..\..\..\inc\sqliteorm\orm_string.h" />

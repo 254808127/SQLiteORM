@@ -39,4 +39,28 @@ namespace SQLiteORM
     typedef std::shared_ptr<Row> SafeRow;
     typedef std::list<SafeRow> RecordList;
     typedef std::list<SQLError> ErrorList;
+
+    enum SQLStateType
+    {
+        enum_begin_state,
+        enum_end_state,
+    };
+
+    enum SQLCommitType
+    {
+        enum_commit_invalid,
+        enum_commit_once, //no return
+        enum_query_count, //return record count
+        enum_query_max, //return max column value
+        enum_query_loop, //return multiple record
+    };
+
+    enum SQLConstrainType
+    {
+        enum_constrain_none = 0,
+        enum_constrain_not_null = 0x00000001,
+        enum_constrain_primary = 0x00000002,
+        enum_constrain_autoincrement = 0x00000004,
+        enum_constrain_unique = 0x00000008,
+    };
 }

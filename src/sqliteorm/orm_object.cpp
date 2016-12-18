@@ -5,14 +5,16 @@ namespace SQLiteORM
 {
     Column2::Column2() //Ä¬ÈÏÎªNULL
         :
-        type_(SQLite::Null)
+        type_(SQLite::Null),
+        constrains_(enum_constrain_none)
     {
     }
 
     Column2::Column2(double num)
         :
         type_(SQLite::FLOAT),
-        numberic_(num)
+        numberic_(num),
+        constrains_(enum_constrain_none)
     {
 
     }
@@ -20,7 +22,8 @@ namespace SQLiteORM
     Column2::Column2(const MyStr& text)
         :
         type_(SQLite::TEXT),
-        text_(text)
+        text_(text),
+        constrains_(enum_constrain_none)
     {
 
     }
@@ -28,14 +31,16 @@ namespace SQLiteORM
     Column2::Column2(int64_t integer)
         :
         type_(SQLite::INTEGER),
-        integer_(integer)
+        integer_(integer),
+        constrains_(enum_constrain_none)
     {
 
     }
 
     Column2::Column2(NullValue)
         :
-        type_(SQLite::Null)
+        type_(SQLite::Null),
+        constrains_(enum_constrain_none)
     {
     }
 
@@ -89,12 +94,19 @@ namespace SQLiteORM
     {
         if (!buffer || len < 1)
             return;
-
+        if (blob_.size() < len)
+            blob_.resize(len);
+        memcpy(&blob_[0], buffer, len);
     }
 
     void Column2::setNull()
     {
         type_ = SQLite::Null;
+    }
+
+    void Column2::setConstrains(int32_t constrains)
+    {
+        constrains_ = constrains;
     }
 
     int64_t Column2::getInt64() const
@@ -128,34 +140,43 @@ namespace SQLiteORM
         return &blob_[0];
     }
 
-    int Column2::getType() const
+    int32_t Column2::getType() const
     {
         return type_;
+    }
+
+    int32_t Column2::getConstrains() const
+    {
+        return constrains_;
     }
 
     const Column2::MyC* Column2::getTypeName() const
     {
         if (type_ == SQLite::INTEGER)
         {
-            return "SQLite::INTEGER";
+            return "INTEGER";
         }
         else if (type_ == SQLite::Null)
         {
-            return "SQLite::Nul";
+            return "NULL";
         }
         else if (type_ == SQLite::FLOAT)
         {
-            return "SQLite::FLOAT";
+            return "NUMERIC";
         }
         else if (type_ == SQLite::TEXT)
         {
-            return "SQLite::TEXT";
+            return "TEXT";
+        }
+        else if (type_ == SQLite::BLOB)
+        {
+            return "BLOB";
         }
         else
         {
-            return "Unknown type";
+            return "NULL";
         }
-        return "Unknown type";
+        return "NULL";
     }
 
     const MyCharType* Column2::getSQL() const
@@ -279,7 +300,7 @@ namespace SQLiteORM
     Column2& Column2::operator||(const Column2& rhs)
     {
         MyOStrStream oss;
-        oss << "(" << sql_ << " or " << rhs.getSQL() << ")";
+        oss << "(" << sql_ << " OR " << rhs.getSQL() << ")";
         return *this;
     }
 
@@ -324,12 +345,12 @@ namespace SQLiteORM
         }
         else if (rhs.type_ == SQLite::Null)
         {
-            oss << "NUL";
+            oss << "NULL";
         }
         else if (rhs.type_ == SQLite::TEXT)
         {
             if (rhs.text_.empty())
-                oss << "NUL";
+                oss << "NULL";
             else
                 oss << '\'' << rhs.text_ << '\'';
         }
@@ -354,36 +375,6 @@ namespace SQLiteORM
         return oss.str();
     }
 
-    Row::MyStr Row::DumpToValue() const
-    {
-        MyStr value;
-        value.push_back('(');
-        for (size_t i = 0; i < m_col_list.size(); ++i)
-        {
-            MyOStrStream oss;
-            oss << *m_col_list[i];
-            value.append(oss.str());
-            value += ",";
-        }
-        value.pop_back();
-        value.push_back(')');
-        return value;
-    }
-
-    Row::MyStr Row::DumpToSet() const
-    {
-        MyStr value;
-        for (size_t i = 0; i < m_col_list.size(); ++i)
-        {
-            MyOStrStream oss;
-            oss << "`" << m_col_list[i]->getName() << "`=" << *m_col_list[i];
-            value.append(oss.str());
-            value += ",";
-        }
-        value.pop_back();
-        return value;
-    }
-
     bool Row::Query(SQLite::Statement& query)
     {
         if (!query.executeStep())
@@ -404,4 +395,8 @@ namespace SQLiteORM
         return m_name.c_str();
     }
 
+    const std::vector<Column2*>& Row::getColumnList() const
+    {
+        return m_col_list;
+    }
 }
